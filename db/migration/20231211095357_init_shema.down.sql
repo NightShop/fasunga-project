@@ -1,21 +1,7 @@
-CREATE TABLE "users" (
-  "email" varchar PRIMARY KEY,
-  "hashed_password" varchar NOT NULL,
-  "itemsGroupKey" varchar NOT NULL
-);
+ALTER TABLE IF EXISTS "users" DROP CONSTRAINT IF EXISTS "users_group_key_fkey";
 
-CREATE TABLE "items" (
-  "id" bigserial PRIMARY KEY,
-  "description" varchar UNIQUE NOT NULL,
-  "groupKey" varchar NOT NULL,
-  "user" varchar NOT NULL
-);
+ALTER TABLE IF EXISTS "items" DROP CONSTRAINT IF EXISTS "items_group_key_fkey";
 
-CREATE INDEX ON "items" ("groupKey");
-
-ALTER TABLE "items" ADD FOREIGN KEY ("groupKey") REFERENCES "users" ("itemsGroupKey");
-
-ALTER TABLE "items" ADD FOREIGN KEY ("user") REFERENCES "users" ("email");
 DROP TABLE IF EXISTS "items";
 DROP TABLE IF EXISTS "users";
 DROP TABLE IF EXISTS "groups";
